@@ -1,0 +1,64 @@
+diff --git a/olden/Makefile b/olden/Makefile
+index 0b0ce6b..bdad172 100644
+--- a/olden/Makefile
++++ b/olden/Makefile
+@@ -1,14 +1,19 @@
+-CFLAGS ?= -O2 -Wno-int-to-pointer-cast -Wno-pointer-to-int-cast -Wno-parentheses-equality -Wno-implicit-int-float-conversion
++CFLAGS ?= -Wno-int-to-pointer-cast -Wno-pointer-to-int-cast -Wno-parentheses-equality -Wno-implicit-int-float-conversion -O1 $(COMMON_CFLAGS)
++CC ?= gclang
+ 
+ bench = bh bisort em3d health mst perimeter power treeadd tsp voronoi
+ bins = $(addsuffix .exe, $(bench))
++bcs = $(addsuffix .bc, $(bench))
+ 
+-all: $(bins)
++all: $(bcs)
+ 
+ .PHONY: clean
+ 
+ %.exe: %/src/*.c
+ 	$(CC) $(CFLAGS) -DTORONTO -I. -I$(basename $@)/src $^ -lm -o $@
+ 
++%.bc: %.exe
++	get-bc -o $@ $<
++
+ clean:
+-	rm -f $(bins)
++	rm -f $(bins) $(bcs)
+diff --git a/olden/README.md b/olden/README.md
+index 87a17fa..c942a5f 100644
+--- a/olden/README.md
++++ b/olden/README.md
+@@ -12,9 +12,6 @@ The main modifications performed in preparation for usage with [this][3] build h
+ 
+ Older/initial versions that were found in the interwebs were placed in archives under the `utils/archives` subdirectory.
+ 
+-The branch `original_source` contains the initially committed source without any changes, and as such it will never 
+-accept any patches.
+-
+ 
+ [1]: http://www.martincarlisle.com/olden.html
+ [2]: README.old.txt
+diff --git a/olden/bh/src/defs.h b/olden/bh/src/defs.h
+index 396ac79..170aba3 100644
+--- a/olden/bh/src/defs.h
++++ b/olden/bh/src/defs.h
+@@ -17,7 +17,7 @@
+ #define RETEST();
+ /*#define isnan(xxx) 0*/
+ #define PID(xxx) 0
+-int NumNodes;
++global int NumNodes;
+ #endif
+ 
+ 
+diff --git a/olden/bh/src/walksub.c b/olden/bh/src/walksub.c
+index 34fd06f..6a7d303 100644
+--- a/olden/bh/src/walksub.c
++++ b/olden/bh/src/walksub.c
+@@ -1,4 +1,4 @@
+-#define global 
++#define global extern
+ #include "defs.h"
+ 
+ typedef struct {
