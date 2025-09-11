@@ -1,0 +1,7 @@
+Claim 1: PSan instrumentation should pass all selected testcases in the Juliet test suite
+
+This part is for section 5.1 "Security Evaluation" of the paper.
+
+The run.sh is for VM / bare-metal setup. Docker environment should use /root/projects/juliet.sh
+
+Juliet test suite contains ~60k test cases, each with a "good" version and a "bad" version. A compiler instrumentation scheme passes a test case if it does not emit false positive in the good version and it catches the real error in the bad version. The run.sh will download the Juliet test suite, patch it, compile relevant test cases with PSan, and run them. It should produce a psan_juliet.xlsx that includes all results. The produced file should be the same as the expected one, where all test cases being run are passed (with PASS_GOOD and PASS_BAD) and the total number of test cases should be 5,390.

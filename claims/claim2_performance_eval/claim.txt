@@ -1,0 +1,7 @@
+Claim 2: PSan (hybrid scheme) should incur less performance overhead than SoftBoundCETS and PSan (shadow memory only) on Olden benchmarks.
+
+This part is for section 5.2 "Performance Evaluation" of the paper. We can only enable Olden programs here. We do not enable the programs from SPEC 2017 because we cannot redistribute SPEC 2017 benchmarks.
+
+The run.sh is for VM / bare-metal setup. Docker environment should use /root/projects/performance.sh
+
+We claim that PSan's hybrid scheme should incur less overhead on programs, especially for small programs where most of pointers can use inline metadata. The scripts should download the Olden benchmark, apply the patch, compile them and produce bitcode files, run PSan instrumentation and produce executables, and then run all of them and make reports. The main driver script is artifact/psan-eval/psaneval.py which takes care of everything after the bitcode files are produced. At the end, the script will create the following outputs in the psan-eval directory: (1) psan_runtime_stats_time.csv (for raw time data samples), and (2) psan_runtime_stats_time_digested.csv (for digested (average) run time and memory usage). They should show that PSan (hybrid scheme) (which is the "full" version in outputs) should incur lower performance overhead than SoftBoundCETS ("softboundcets") and PSan-shadow ("full-oob" where "oob" means "Out-Of-Band metadata only").
