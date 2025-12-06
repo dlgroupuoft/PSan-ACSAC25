@@ -1,6 +1,6 @@
 # PSan: Towards Hybrid Metadata Scheme for Efficient Pointer Checking
 
-This repository contains artifacts and files used to reproduce experiments in paper "PSan: Towards Hybrid Metadata Scheme for Efficient Pointer Checking".
+This repository contains artifacts and files used to reproduce experiments in paper ["PSan: Towards Hybrid Metadata Scheme for Efficient Pointer Checking"](https://security.csl.toronto.edu/wp-content/uploads/2025/11/sxu_acsac2025_psan.pdf).
 
 
 ## Artifacts
